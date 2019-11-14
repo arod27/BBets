@@ -1,7 +1,7 @@
 ---
 title: "Brownlows Bets"
-author: "Put your name here!"
-date: "put the date here"
+author: "Ariana Rodriguez"
+date: "13 November 2019"
 output: html_document: default
  ---
 
@@ -20,15 +20,51 @@ output: html_document: default
 
 #Profit Estimate
 
+```{r}
+days=1:365
+count=1135 # number of times the bet was made
+repeatn=1000
+varstor=numeric()
+for (j in 1:repeatn) {
+brownlow = 0
+for (i in 1:count) {
+  sam=sample(days,size=35,replace =T)
+  y=duplicated(sam)
+  if (sum(y)>0) brownlow=brownlow+1
+  else brownlow = brownlow - 2
+}
+varstor[j]=brownlow
+}
+hist(varstor)
+var(varstor)
+print(paste('average return = ', mean(varstor)))
+```
+
 <!--Explain and display the results of your method of coming up with the estimate of professor Brownlows betting!-->
 
+By using resampling I found that the average amount made was about $505.
 
 # Confidence interval of Brownlows earning
 
 <!--Explain and display your method of coming up with a 95% confidence interval of  professor Brownlows-->
 
+```{r}
+varSorted = sort(varstor)
+LCL = varSorted[25]
+UCL = varSorted[975]
+print(paste('UCL = ',UCL,'LCL = ',LCL))
+
+
+```
+
+
 
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If professor Brownlow is consistantly making or losing money how could he change his payout so that his profits center on zero?  Also discuss what size his class should be in order to have his current scheme balance at zero profit.!-->
+
+I tried payouts of -3, -10, and I found eventually that a payoff of -4.40 was the 'fair' amount.
+
+
+I found that if the class size = 28, Brownlow about breaks even. If the class size = 35 he makes money, if the class size = 15 he loses money. 
 
